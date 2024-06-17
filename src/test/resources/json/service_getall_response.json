@@ -1,0 +1,47 @@
+{
+  "data": {
+    "totalPages": 1,
+    "totalElements": 3,
+    "size": 10,
+    "content": [
+      {
+        "id": 1,
+        "name": "JNT",
+        "priceKg": 1.0
+      },
+      {
+        "id": 2,
+        "name": "SICEPAT",
+        "priceKg": 2.0
+      },
+      {
+        "id": 3,
+        "name": "PhinExpress",
+        "priceKg": 3.0
+      }
+    ],
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "first": true,
+    "last": true,
+    "numberOfElements": 3,
+    "pageable": {
+      "pageNumber": 0,
+      "pageSize": 10,
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "empty": false
+  },
+  "errors": null
+}

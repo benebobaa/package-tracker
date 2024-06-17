@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-Tracker</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for the dropdown */
+        .dropdown-menu {
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-white border-gray-200 px-4 py-2.5 rounded dark:bg-gray-800">
+    <div class="container flex flex-wrap justify-between items-center mx-auto">
+        <a href="#" class="ml-24 flex items-center">
+            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" class="h-8 mr-3" alt="Logo">
+            <span class="self-center text-md font-semibold whitespace-nowrap dark:text-white">P-Tracker with Flowbite</span>
+        </a>
+        <div class="flex space-x-4 ml-24">
+            <a href="/home" class="text-gray-700 dark:text-white px-4 py-2 font-semibold hover:text-blue-500">Delivery</a>
+            <a hx-swap="outerHTML" hx-target="#main_section" hx-get="/home/location" href="#location" class="text-gray-700 dark:text-white px-4 py-2 font-semibold hover:text-blue-500">Location</a>
+            <a hx-swap="outerHTML" hx-target="#main_section" hx-get="/home/service" href="#service" class="text-gray-700 dark:text-white px-4 py-2 font-semibold hover:text-blue-500">Service</a>
+        </div>
+        <div class="mr-24 relative">
+            <button id="profileButton" class="flex items-center focus:outline-none">
+                <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Profile Picture">
+            </button>
+            <div th:object="${user}" id="dropdownMenu" class="dropdown-menu z-30 absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 dark:bg-gray-700">
+                <a th:text="*{username}" href="#" class="block px-4 text-sm font-bold text-gray-700 dark:text-white"></a>
+                <a th:text="*{name}" href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-white"></a>
+                <a th:text="*{role}" href="#" class="block px-4 py-2 text-sm font-semibold text-grey-800 dark:text-white"></a>
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
+                <a href="/auth/logout" class="block px-4 py-2 text-md font-bold text-blue-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <div id="main_section" class="">
+        <div class="container mx-auto">
+            <div class="flex items-center justify-center h-screen">
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Welcome to P-Tracker</h1>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // JavaScript to toggle profile dropdown menu
+    document.getElementById('profileButton').addEventListener('click', function() {
+        var dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', function(e) {
+        if (!document.getElementById('profileButton').contains(e.target)) {
+            var dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.classList.remove('show');
+        }
+    });
+</script>
+</body>
+</html>

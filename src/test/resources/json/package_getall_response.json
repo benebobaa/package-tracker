@@ -1,0 +1,72 @@
+{
+  "data": {
+  "content": [
+    {
+      "destination": {
+        "id": 1,
+        "codeLocation": "gdng-000",
+        "name": "Menteng Dalam",
+        "address": "Jalan Kaki NO 88"
+      },
+      "id": 1,
+      "receiver": {
+        "id": 1,
+        "name": "bono",
+        "phone": "0857111111"
+      },
+      "sender": {
+        "id": 1,
+        "name": "bene",
+        "phone": "08572983212"
+      },
+      "weight": 10.0
+    },
+    {
+      "destination": {
+        "id": 1,
+        "codeLocation": "gdng-000",
+        "name": "Menteng Dalam",
+        "address": "Jalan Kaki NO 88"
+      },
+      "id": 2,
+      "receiver": {
+        "id": 1,
+        "name": "bono",
+        "phone": "0857111111"
+      },
+      "sender": {
+        "id": 1,
+        "name": "bene",
+        "phone": "08572983212"
+      },
+      "weight": 10.0
+    }
+  ],
+  "empty": false,
+  "first": true,
+  "last": true,
+  "number": 0,
+  "numberOfElements": 2,
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "sorted": false,
+      "empty": true,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "size": 10,
+  "sort": {
+    "sorted": false,
+    "empty": true,
+    "unsorted": true
+  },
+  "totalElements": 2,
+  "totalPages": 1
+  },
+  "errors":null
+}

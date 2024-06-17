@@ -1,0 +1,44 @@
+{
+  "data": {
+    "totalPages": 1,
+    "totalElements": 2,
+    "size": 10,
+    "content": [
+      {
+        "address": "Jalan Kaki NO 88",
+        "codeLocation": "gdng-001",
+        "id": 1,
+        "name": "Jakarta 1"
+      },
+      {
+        "address": "Jalan Kaki NO 88",
+        "codeLocation": "gdng-002",
+        "id": 2,
+        "name": "Jakarta 2"
+      }
+    ],
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "first": true,
+    "last": true,
+    "numberOfElements": 2,
+    "pageable": {
+      "pageNumber": 0,
+      "pageSize": 10,
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "empty": false
+  },
+  "errors": null
+}
