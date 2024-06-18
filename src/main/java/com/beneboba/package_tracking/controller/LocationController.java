@@ -39,10 +39,11 @@ public class LocationController {
 
     @GetMapping
     public ResponseEntity<BaseResponse<Page<Location>>> getAll(
+            @RequestParam(required = false) String queryName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        Page<Location> response = locationService.getAll(page, size);
+        Page<Location> response = locationService.getAll(queryName,page, size);
 
         return ResponseEntity.ok(BaseResponse
                 .<Page<Location>>builder()

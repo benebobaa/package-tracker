@@ -67,9 +67,26 @@ public class LocationServiceTest {
 
         when(locationRepository.findAll(any(PageRequest.class))).thenReturn(locationList);
 
-        Page<Location> actual = locationService.getAll(0,10);
+        Page<Location> actual = locationService.getAll(null,0,10);
 
         verify(locationRepository, times(1)).findAll(any(PageRequest.class));
+        assertEquals(2, actual.getTotalElements());
+        assertEquals(locationList, actual);
+    }
+
+    @Test
+    void testFindAllWithQueryName(){
+        Location location1 = DummyLocation.newLocation();
+        Location location2 = DummyLocation.newLocation();
+
+        Page<Location> locationList = new PageImpl<>(List.of(location1, location2));
+
+        when(locationRepository.findByName(anyString(),any(PageRequest.class))).thenReturn(locationList);
+
+        Page<Location> actual = locationService.getAll("test",0,10);
+
+        verify(locationRepository, times(1)).findByName("test",PageRequest.of(0,10));
+        verify(locationRepository, times(0)).findAll(PageRequest.of(0,10));
         assertEquals(2, actual.getTotalElements());
         assertEquals(locationList, actual);
     }

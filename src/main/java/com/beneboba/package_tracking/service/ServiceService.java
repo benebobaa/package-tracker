@@ -11,6 +11,6 @@ public interface ServiceService{
 
     Service create(ServiceRequest serviceRequest);
 
-    Page<Service> getAll(int page, int size);
+    Page<Service> getAll(String queryName,int page, int size);
 
 }

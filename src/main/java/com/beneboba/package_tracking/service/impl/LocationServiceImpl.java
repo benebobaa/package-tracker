@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,9 +44,16 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Page<Location> getAll(int page, int size) {
+    public Page<Location> getAll(String queryName, int page, int size) {
+
+        log.info("getAll -> queryName :: " + queryName + " page :: " + page + " size :: " + size);
+
         Pageable pageable = PageRequest.of(page, size);
 
-        return locationRepository.findAll(pageable);
+        if (queryName == null || queryName.trim().isEmpty()){
+            return locationRepository.findAll(pageable);
+        }
+
+        return locationRepository.findByName(queryName, pageable);
     }
 }

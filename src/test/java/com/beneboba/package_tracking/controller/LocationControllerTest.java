@@ -83,11 +83,12 @@ public class LocationControllerTest {
         List<Location> locationList = List.of(location1, location2);
         Page<Location> mockPage = new PageImpl<>(locationList, PageRequest.of(0, 10), 2);
 
-        when(locationService.getAll(anyInt(), anyInt())).thenReturn(mockPage);
+        when(locationService.getAll(anyString(),anyInt(), anyInt())).thenReturn(mockPage);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/locations")
                         .param("page", "0")
                         .param("size", "10")
+                        .param("queryName", "")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -99,6 +100,6 @@ public class LocationControllerTest {
 
                 });
 
-        verify(locationService, times(1)).getAll(0,10);
+        verify(locationService, times(1)).getAll("",0,10);
     }
 }

@@ -33,8 +33,15 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public Page<Service> getAll(int page, int size) {
+    public Page<Service> getAll(String queryName,int page, int size) {
+        log.info("getAll -> queryName :: " + queryName + " page :: " + page + " size :: " + size);
+
         Pageable pageable = PageRequest.of(page, size);
-        return serviceRepository.findAll(pageable);
+
+        if (queryName == null || queryName.trim().isEmpty()){
+            return serviceRepository.findAll(pageable);
+        }
+
+        return serviceRepository.findByName(queryName, pageable);
     }
 }

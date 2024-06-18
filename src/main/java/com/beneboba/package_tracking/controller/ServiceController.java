@@ -6,7 +6,6 @@ import com.beneboba.package_tracking.model.request.ServiceRequest;
 import com.beneboba.package_tracking.service.ServiceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +37,11 @@ public class ServiceController {
     @GetMapping
     public ResponseEntity<BaseResponse<Page<Service>>> getAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String queryName
     ) {
 
-        Page<Service> response = serviceService.getAll(page, size);
+        Page<Service> response = serviceService.getAll(queryName,page, size);
 
         log.info("getAll -> " + response.toString());
 

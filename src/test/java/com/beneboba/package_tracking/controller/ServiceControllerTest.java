@@ -63,17 +63,18 @@ public class ServiceControllerTest {
 
         Page<Service> services = new PageImpl<>(Arrays.asList(service1, service2));
 
-        when(serviceService.getAll(0,10)).thenReturn(services);
+        when(serviceService.getAll(anyString(),anyInt(),anyInt())).thenReturn(services);
 
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/services")
+                                .param("queryName", "")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
-        verify(serviceService, times(1)).getAll(0, 10);
+        verify(serviceService, times(1)).getAll("",0, 10);
     }
 
     @Test
@@ -115,12 +116,13 @@ public class ServiceControllerTest {
 
         Page<Service> page = new PageImpl<>(serviceList, PageRequest.of(0, 10), 3);
 
-        when(serviceService.getAll(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt()))
+        when(serviceService.getAll(anyString(),anyInt(), anyInt()))
                 .thenReturn(page);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/services")
                         .param("page", "0")
                         .param("size", "10")
+                        .param("queryName", "")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -132,6 +134,6 @@ public class ServiceControllerTest {
                     JSONAssert.assertEquals(expectedJson, actualJson, true);
                 });
 
-        verify(serviceService, times(1)).getAll(0, 10);
+        verify(serviceService, times(1)).getAll("",0, 10);
     }
 }

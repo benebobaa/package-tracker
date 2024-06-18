@@ -10,5 +10,5 @@ public interface LocationService {
 
     Location create(LocationRequest locationRequest);
 
-    Page<Location> getAll(int page, int size);
+    Page<Location> getAll(String queryName, int page, int size);
 }

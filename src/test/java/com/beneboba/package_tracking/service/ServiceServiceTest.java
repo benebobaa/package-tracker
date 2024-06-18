@@ -57,9 +57,23 @@ public class ServiceServiceTest {
 
         when(serviceRepository.findAll(any(PageRequest.class))).thenReturn(serviceList);
 
-        Page<Service> services = serviceService.getAll(0,10);
+        Page<Service> services = serviceService.getAll(null,0,10);
 
         verify(serviceRepository, times(1)).findAll(PageRequest.of(0,10));
+        assertEquals(services.getTotalElements(), 1);
+    }
+
+    @Test
+    void testFindAllWithQueryName(){
+        Service serviceEntity = DummyService.newService();
+        Page<Service> serviceList = new PageImpl<>(List.of(serviceEntity));
+
+        when(serviceRepository.findByName(anyString(),any(PageRequest.class))).thenReturn(serviceList);
+
+        Page<Service> services = serviceService.getAll("test",0,10);
+
+        verify(serviceRepository, times(1)).findByName("test",PageRequest.of(0,10));
+        verify(serviceRepository, times(0)).findAll(PageRequest.of(0,10));
         assertEquals(services.getTotalElements(), 1);
     }
 }

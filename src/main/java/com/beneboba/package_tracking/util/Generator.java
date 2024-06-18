@@ -46,7 +46,7 @@ public class Generator {
 
     public static String randomPhone(){
         String[] phoneFormat = {"+62", "08"};
-        return phoneFormat[(int) (Math.random() * phoneFormat.length)] + (int) (Math.random() * 1000000000);
+        return phoneFormat[(int) (Math.random() * phoneFormat.length)] + (int) (Math.random() * 1000000000L);
     }
 
     public static Long randomId(Long min, Long max){
