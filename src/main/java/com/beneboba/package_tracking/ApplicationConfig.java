@@ -54,44 +54,44 @@ public class ApplicationConfig {
         return authProvider;
     }
 
-//    @Bean
-//	public CommandLineRunner commandLineRunner(
-//            LocationService locationService,
-//            ServiceService serviceService,
-//            DeliveryService deliveryService,
-//            AuthService authService,
-//            UserRepository userRepository
-//    ) {
-//		return args -> {
-//			// Generate Location Data
-//			Generator.generateLocation(locationService, 50, true);
-//
-//			// Generate Service Data
-//			Generator.generateService(serviceService, 15, true);
-//
-//			// Generate Delivery Data
-//			Generator.generateDelivery(deliveryService, 30, true);
-//
-//			// Generate user admin
-//            UserRegisterRequest userRequest1 = UserRegisterRequest
-//                    .builder()
-//                    .name("Phincon Admin")
-//                    .username("admin123")
-//                    .password("admin123")
-//                    .role(UserRole.ADMIN)
-//                    .build();
-//
-//			Generator.generateUser(authService, userRepository, userRequest1);
-//
-//            UserRegisterRequest userRequest2 = UserRegisterRequest
-//                    .builder()
-//                    .name("Bene Spring")
-//                    .username("beneboba")
-//                    .password("beneboba")
-//                    .role(UserRole.USER)
-//                    .build();
-//
-//            Generator.generateUser(authService, userRepository, userRequest2);
-//        };
-//	}
+    @Bean
+	public CommandLineRunner commandLineRunner(
+            LocationService locationService,
+            ServiceService serviceService,
+            DeliveryService deliveryService,
+            AuthService authService,
+            UserRepository userRepository
+    ) {
+		return args -> {
+			// Generate Location Data
+			Generator.generateLocation(locationService, 20, true);
+
+			// Generate Service Data
+			Generator.generateService(serviceService, 8, true);
+
+			// Generate Delivery Data
+			Generator.generateDelivery(deliveryService, 20, true);
+
+			// Generate user admin
+            UserRegisterRequest userRequest1 = UserRegisterRequest
+                    .builder()
+                    .name("Phincon Admin")
+                    .username("admin123")
+                    .password("admin123")
+                    .role(UserRole.ADMIN)
+                    .build();
+
+			Generator.generateUser(authService, userRepository, userRequest1);
+
+            UserRegisterRequest userRequest2 = UserRegisterRequest
+                    .builder()
+                    .name("Bene Spring")
+                    .username("beneboba")
+                    .password("beneboba")
+                    .role(UserRole.USER)
+                    .build();
+
+            Generator.generateUser(authService, userRepository, userRequest2);
+        };
+	}
 }
