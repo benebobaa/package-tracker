@@ -49,6 +49,5 @@ public class ErrorController {
                 .body(BaseResponse.<String>builder()
                         .errors(exception.getMessage())
                         .build());
-
     }
 }

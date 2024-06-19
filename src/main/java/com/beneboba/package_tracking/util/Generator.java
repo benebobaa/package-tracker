@@ -25,7 +25,6 @@ public class Generator {
     private static Long locationMinId;
     private static Long locationMaxId;
 
-
     public static String sequenceCodeLocation(Long id) {
         return String.format("gdng-%05d", id);
     }

@@ -49,7 +49,7 @@ public class PackageServiceImpl implements PackageService {
     public Package create(CreatePackageRequest createPackageRequest) {
         validationService.validate(createPackageRequest);
 
-        Optional<Location> location = locationRepository.findFirstByCodeLocation(createPackageRequest.getCodeLocation());
+        Optional<Location> location = locationRepository.findFirstByCodeloc(createPackageRequest.getCodeLocation());
 
         if (location.isEmpty()) {
             log.error(this.getClass().getSimpleName() + " create -> Location not found");

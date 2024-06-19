@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(
+        indexes = {
+                @Index(name = "idx_service_name", columnList = "name"),
+        }
+)
 public class Service {
 
     @Id

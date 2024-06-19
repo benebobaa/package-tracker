@@ -23,7 +23,7 @@ public class JwtService {
     private Long jwtExpirationInMs;
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, claims -> claims.getSubject());
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

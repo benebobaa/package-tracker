@@ -66,12 +66,12 @@ public class PackageServiceTest {
         Location expectedLocation = DummyLocation.newLocation();
         Package expectedPackage = packageRequest.toEntity(senderRequest.toEntity(), receiverRequest.toEntity(), expectedLocation);
 
-        when(locationRepository.findFirstByCodeLocation(DummyLocation.CODE_LOCATION))
+        when(locationRepository.findFirstByCodeloc(DummyLocation.CODE_LOCATION))
                 .thenReturn(Optional.of(expectedLocation));
         when(packageRepository.save(any(Package.class))).thenReturn(expectedPackage);
 
 
-        Optional<Location> actualLocation = locationRepository.findFirstByCodeLocation(DummyLocation.CODE_LOCATION);
+        Optional<Location> actualLocation = locationRepository.findFirstByCodeloc(DummyLocation.CODE_LOCATION);
         Package actualPackage = packageService.create(packageRequest);
 
         assertEquals(expectedLocation, actualLocation.get());
@@ -82,7 +82,7 @@ public class PackageServiceTest {
     void testCreateWhenLocationIsEmpty() {
         CreatePackageRequest packageRequest = DummyPackage.newPackageRequest();
 
-        when(locationRepository.findFirstByCodeLocation(DummyLocation.CODE_LOCATION))
+        when(locationRepository.findFirstByCodeloc(DummyLocation.CODE_LOCATION))
                 .thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class,

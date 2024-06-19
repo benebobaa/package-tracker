@@ -6,13 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(
         indexes = {
-                @Index(name = "idx_name", columnList = "name"),
+                @Index(name = "idx_location_name", columnList = "name"),
         }
 )
 public class Location {
@@ -22,7 +24,7 @@ public class Location {
     private Long id;
 
     @Column(unique = true)
-    private String codeLocation;
+    private String codeloc;
 
     private String name;
 

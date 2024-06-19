@@ -27,7 +27,7 @@ public class LocationRepositoryTest {
         Location foundLocation = locationRepository.findFirstByOrderByIdDesc();
 
         assertThat(foundLocation).isNotNull();
-        assertThat(foundLocation.getCodeLocation()).isEqualTo("gdng-001");
+        assertThat(foundLocation.getCodeloc()).isEqualTo("gdng-001");
     }
 
     @Test
@@ -42,16 +42,16 @@ public class LocationRepositoryTest {
         Location location = DummyLocation.newLocation();
         locationRepository.save(location);
 
-        Optional<Location> foundLocation = locationRepository.findFirstByCodeLocation(DummyLocation.CODE_LOCATION);
+        Optional<Location> foundLocation = locationRepository.findFirstByCodeloc(DummyLocation.CODE_LOCATION);
 
         assertThat(foundLocation).isPresent();
-        assertThat(foundLocation.get().getCodeLocation()).isEqualTo(DummyLocation.CODE_LOCATION);
+        assertThat(foundLocation.get().getCodeloc()).isEqualTo(DummyLocation.CODE_LOCATION);
         assertThat(foundLocation.get().getName()).isEqualTo(DummyLocation.NAME_LOCATION);
     }
 
     @Test
     public void testFindFirstByCodeLocationNotFound() {
-        Optional<Location> foundLocation = locationRepository.findFirstByCodeLocation("nofoundlocation");
+        Optional<Location> foundLocation = locationRepository.findFirstByCodeloc("nofoundlocation");
 
         assertThat(foundLocation).isNotPresent();
     }

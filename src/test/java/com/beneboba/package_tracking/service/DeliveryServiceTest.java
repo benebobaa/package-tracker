@@ -85,7 +85,7 @@ public class DeliveryServiceTest {
                 DummyDelivery.DELIVERY_IS_RECEIVED);
 
 
-        when(locationRepository.findFirstByCodeLocation(anyString())).thenReturn(Optional.of(location));
+        when(locationRepository.findFirstByCodeloc(anyString())).thenReturn(Optional.of(location));
         when(senderRepository.save(any(Sender.class))).thenReturn(sender);
         when(receiverRepository.save(any(Receiver.class))).thenReturn(receiver);
         when(packageRepository.save(any(Package.class))).thenReturn(pkg);
@@ -94,7 +94,7 @@ public class DeliveryServiceTest {
 
         Delivery actualDelivery = deliveryService.createWithPackage(deliveryRequest);
 
-        verify(locationRepository, times(1)).findFirstByCodeLocation(anyString());
+        verify(locationRepository, times(1)).findFirstByCodeloc(anyString());
         verify(senderRepository, times(1)).save(any(Sender.class));
         verify(receiverRepository, times(1)).save(any(Receiver.class));
         verify(packageRepository, times(1)).save(any(Package.class));
@@ -110,7 +110,7 @@ public class DeliveryServiceTest {
         CreateDeliveryPackageRequest request = DummyDelivery.newDeliveryRequest(
                 packageRequest, DummyService.SERVICE_ID);
 
-        when(locationRepository.findFirstByCodeLocation(anyString())).thenReturn(Optional.empty());
+        when(locationRepository.findFirstByCodeloc(anyString())).thenReturn(Optional.empty());
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             deliveryService.createWithPackage(request);
@@ -119,7 +119,7 @@ public class DeliveryServiceTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
         assertEquals("Location not found", exception.getReason());
 
-        verify(locationRepository, times(1)).findFirstByCodeLocation(anyString());
+        verify(locationRepository, times(1)).findFirstByCodeloc(anyString());
         verify(senderRepository, times(0)).save(any(Sender.class));
         verify(receiverRepository, times(0)).save(any(Receiver.class));
         verify(packageRepository, times(0)).save(any(Package.class));
@@ -133,7 +133,7 @@ public class DeliveryServiceTest {
         CreateDeliveryPackageRequest request = DummyDelivery.newDeliveryRequest(
                 packageRequest, DummyService.SERVICE_ID);
 
-        when(locationRepository.findFirstByCodeLocation(anyString())).thenReturn(Optional.of(new Location()));
+        when(locationRepository.findFirstByCodeloc(anyString())).thenReturn(Optional.of(new Location()));
         when(serviceRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
@@ -143,7 +143,7 @@ public class DeliveryServiceTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
         assertEquals("Service not found", exception.getReason());
 
-        verify(locationRepository, times(1)).findFirstByCodeLocation(anyString());
+        verify(locationRepository, times(1)).findFirstByCodeloc(anyString());
         verify(senderRepository, times(0)).save(any(Sender.class));
         verify(receiverRepository, times(0)).save(any(Receiver.class));
         verify(packageRepository, times(0)).save(any(Package.class));
@@ -162,13 +162,13 @@ public class DeliveryServiceTest {
         request.setCodeLocation(DummyLocation.CODE_LOCATION);
 
         when(deliveryRepository.findById(DummyDelivery.DELIVERY_ID)).thenReturn(Optional.of(deliveryEntity));
-        when(locationRepository.findFirstByCodeLocation(DummyLocation.CODE_LOCATION)).thenReturn(Optional.of(locationEntity));
+        when(locationRepository.findFirstByCodeloc(DummyLocation.CODE_LOCATION)).thenReturn(Optional.of(locationEntity));
         when(deliveryRepository.save(any(Delivery.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         Delivery updatedDelivery = deliveryService.updateCheckpointLocation(request);
 
         verify(deliveryRepository, times(1)).findById(DummyDelivery.DELIVERY_ID);
-        verify(locationRepository, times(1)).findFirstByCodeLocation(DummyLocation.CODE_LOCATION);
+        verify(locationRepository, times(1)).findFirstByCodeloc(DummyLocation.CODE_LOCATION);
         verify(deliveryRepository, times(1)).save(any(Delivery.class));
 
         assertNotNull(updatedDelivery);
@@ -193,7 +193,7 @@ public class DeliveryServiceTest {
         assertEquals("Delivery not found", exception.getReason());
 
         verify(deliveryRepository, times(1)).findById(DummyDelivery.DELIVERY_ID);
-        verify(locationRepository, never()).findFirstByCodeLocation(anyString());
+        verify(locationRepository, never()).findFirstByCodeloc(anyString());
         verify(deliveryRepository, never()).save(any(Delivery.class));
     }
 
@@ -207,7 +207,7 @@ public class DeliveryServiceTest {
         request.setCodeLocation(DummyLocation.CODE_LOCATION);
 
         when(deliveryRepository.findById(DummyDelivery.DELIVERY_ID)).thenReturn(Optional.of(deliveryEntity));
-        when(locationRepository.findFirstByCodeLocation(DummyLocation.CODE_LOCATION)).thenReturn(Optional.empty());
+        when(locationRepository.findFirstByCodeloc(DummyLocation.CODE_LOCATION)).thenReturn(Optional.empty());
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             deliveryService.updateCheckpointLocation(request);
@@ -217,7 +217,7 @@ public class DeliveryServiceTest {
         assertEquals("Location not found", exception.getReason());
 
         verify(deliveryRepository, times(1)).findById(DummyDelivery.DELIVERY_ID);
-        verify(locationRepository, times(1)).findFirstByCodeLocation(DummyLocation.CODE_LOCATION);
+        verify(locationRepository, times(1)).findFirstByCodeloc(DummyLocation.CODE_LOCATION);
         verify(deliveryRepository, never()).save(any(Delivery.class));
     }
 
@@ -269,5 +269,38 @@ public class DeliveryServiceTest {
                          filter.getIsReceived(),
                          pageable);
     }
+
+    @Test
+    void testFindById() {
+        Long deliveryId = DummyDelivery.DELIVERY_ID;;
+        Delivery delivery = DummyDelivery.newDelivery();
+        delivery.setId(deliveryId);
+
+        when(deliveryRepository.findById(deliveryId)).thenReturn(Optional.of(delivery));
+
+        Delivery result = deliveryService.findById(deliveryId);
+
+        verify(deliveryRepository, times(1)).findById(deliveryId);
+
+        assertNotNull(result);
+        assertEquals(delivery, result);
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        Long deliveryId = DummyDelivery.DELIVERY_ID;
+
+        when(deliveryRepository.findById(deliveryId)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            deliveryService.findById(deliveryId);
+        });
+
+        verify(deliveryRepository, times(1)).findById(deliveryId);
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Delivery not found", exception.getReason());
+    }
+
 }
 

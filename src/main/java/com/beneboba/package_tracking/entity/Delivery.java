@@ -33,8 +33,9 @@ public class Delivery {
             joinColumns = @JoinColumn(name = "delivery_id"),
             inverseJoinColumns = @JoinColumn(name = "location_id")
     )
-
     private List<Location> checkpointDelivery;
+//    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<DeliveryLocation> checkpointDelivery;
 
     private Boolean isReceived;
 }

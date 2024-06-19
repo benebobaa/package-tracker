@@ -108,7 +108,7 @@
                             <tbody>
                             <tr th:each="loc : ${locations}" class="border-b dark:border-gray-700">
                                 <th th:text="${loc.id}" scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
-                                <td th:text="${loc.codeLocation}" class="px-4 py-3"></td>
+                                <td th:text="${loc.codeloc}" class="px-4 py-3"></td>
                                 <td th:text="${loc.name}" class="px-4 py-3"></td>
                                 <td th:text="${loc.address}" class="px-4 py-3"></td>
                                 <td class="px-4 py-3 flex items-center justify-end">
@@ -143,7 +143,6 @@
                                     <span th:text="${i + 1}">1</span>
                                 </a>
                             </li>
-
                         </ul>
 
 

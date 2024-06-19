@@ -4,7 +4,7 @@
     {
       "destination": {
         "id": 1,
-        "codeLocation": "gdng-000",
+        "codeloc": "gdng-000",
         "name": "Menteng Dalam",
         "address": "Jalan Kaki NO 88"
       },
@@ -24,7 +24,7 @@
     {
       "destination": {
         "id": 1,
-        "codeLocation": "gdng-000",
+        "codeloc": "gdng-000",
         "name": "Menteng Dalam",
         "address": "Jalan Kaki NO 88"
       },

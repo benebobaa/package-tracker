@@ -6,13 +6,13 @@
     "content": [
       {
         "address": "Jalan Kaki NO 88",
-        "codeLocation": "gdng-001",
+        "codeloc": "gdng-001",
         "id": 1,
         "name": "Jakarta 1"
       },
       {
         "address": "Jalan Kaki NO 88",
-        "codeLocation": "gdng-002",
+        "codeloc": "gdng-002",
         "id": 2,
         "name": "Jakarta 2"
       }

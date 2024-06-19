@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,7 +47,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public Delivery createWithPackage(CreateDeliveryPackageRequest request) {
         validationService.validate(request);
 
-        Optional<Location> location = locationRepository.findFirstByCodeLocation(request.getPackageRequest().getCodeLocation());
+        Optional<Location> location = locationRepository.findFirstByCodeloc(request.getPackageRequest().getCodeLocation());
 
         if (location.isEmpty()) {
             log.error(this.getClass().getSimpleName() + " create -> Location not found");
@@ -98,12 +99,14 @@ public class DeliveryServiceImpl implements DeliveryService {
         Optional<Delivery> optionalDelivery = deliveryRepository.findById(request.getDeliveryId());
 
         if (optionalDelivery.isEmpty()) {
+            log.error("updateCheckpointLocation -> Delivery not found");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Delivery not found");
         }
 
-        Optional<Location> location = locationRepository.findFirstByCodeLocation(request.getCodeLocation());
+        Optional<Location> location = locationRepository.findFirstByCodeloc(request.getCodeLocation());
 
         if (location.isEmpty()) {
+            log.error("updateCheckpointLocation -> Location not found");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Location not found");
         }
 
@@ -116,10 +119,9 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.setCheckpointDelivery(checkpointDelivery);
 
         log.info("after add :: checkpointDelivery -> " + checkpointDelivery);
-
         log.info("request codeLocation -> {}", request.getCodeLocation());
-        log.info("delivery destination codeLocation -> {}", delivery.getPackageItem().getDestination().getCodeLocation());
-        if (Objects.equals(request.getCodeLocation(), delivery.getPackageItem().getDestination().getCodeLocation())){
+        log.info("delivery destination codeLocation -> {}", delivery.getPackageItem().getDestination().getCodeloc());
+        if (Objects.equals(request.getCodeLocation(), delivery.getPackageItem().getDestination().getCodeloc())){
             delivery.setIsReceived(true);
         }
 
@@ -142,5 +144,23 @@ public class DeliveryServiceImpl implements DeliveryService {
                 filter.getIsReceived(),
                 pageable
         );
+    }
+
+    @Override
+    public Delivery findById(Long id) {
+
+        Optional<Delivery> deliveryOptional = deliveryRepository.findById(id);
+
+        if (deliveryOptional.isEmpty()) {
+            log.error("findById -> Delivery not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Delivery not found");
+        }
+
+        List<Location> checkpointDelivery = locationRepository.findCheckpointDeliveryByDeliveryId(deliveryOptional.get().getId());
+        Delivery delivery = deliveryOptional.get();
+        delivery.setCheckpointDelivery(checkpointDelivery);
+
+
+        return delivery;
     }
 }

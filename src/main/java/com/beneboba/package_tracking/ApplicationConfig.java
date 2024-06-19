@@ -24,11 +24,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class ApplicationConfig {
 
-//    @Autowired
-//    private UserRepository userRepository;
-
-
-
     @Bean
     UserDetailsService userDetailsService(
             UserRepository userRepository

@@ -124,7 +124,7 @@ public class DeliveryControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(response.getId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.checkpointDelivery[0].codeLocation").value(location.getCodeLocation()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.checkpointDelivery[0].codeloc").value(location.getCodeloc()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.priceDelivery").value(response.getPriceDelivery()));
 
         verify(deliveryService, times(1)).updateCheckpointLocation(any(UpdateCheckpointRequest.class));

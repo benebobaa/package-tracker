@@ -15,4 +15,6 @@ public interface DeliveryService {
     Page<Delivery> getAll(int page, int size);
 
     Page<Delivery> getAllWithFilter(PackageFilter filter, int page, int size);
+
+    Delivery findById(Long id);
 }
